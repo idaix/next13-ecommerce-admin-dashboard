@@ -1,3 +1,5 @@
+import Container from "@/components/container";
+import Heading from "@/components/ui/heading";
 import prismadb from "@/lib/prismadb";
 
 interface DashboardParams {
@@ -11,7 +13,11 @@ const DashboardPage: React.FC<DashboardParams> = async ({ params }) => {
     },
   });
 
-  return <div className="p-3">Hello {store?.name}</div>;
+  return (
+    <Container>
+      <Heading title="Dashboard" description="Overview of your store" />{" "}
+    </Container>
+  );
 };
 
 export default DashboardPage;
