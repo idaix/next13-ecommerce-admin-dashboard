@@ -7,16 +7,16 @@ export async function GET(
   {
     params,
   }: {
-    params: { billboadId: string };
+    params: { billboardId: string };
   }
 ) {
   try {
-    if (!params.billboadId) {
+    if (!params.billboardId) {
       return new NextResponse("Billboard id is required", { status: 400 });
     }
     const billboard = await prismadb.billboard.findFirst({
       where: {
-        id: params.billboadId,
+        id: params.billboardId,
       },
     });
     return NextResponse.json(billboard);
