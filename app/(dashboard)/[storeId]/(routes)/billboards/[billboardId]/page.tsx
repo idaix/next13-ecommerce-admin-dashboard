@@ -3,7 +3,7 @@ import { auth } from "@clerk/nextjs";
 import { useId } from "react";
 import { redirect } from "next/navigation";
 import prismadb from "@/lib/prismadb";
-import BillboardForm from "./components/billboard-form ";
+import BillboardForm from "./components/billboard-form";
 
 const BillboardAction = async ({
   params,
@@ -11,7 +11,7 @@ const BillboardAction = async ({
   params: { billboardId: string };
 }) => {
   const { userId } = auth();
-  if (!useId) {
+  if (!userId) {
     redirect("/sign-in");
   }
   if (!params.billboardId) {
