@@ -1,7 +1,8 @@
-import axios from "axios";
-import BillboardClient from "./components/BillboardClient";
+import BillboardClient from "./components/client";
 import Container from "@/components/container";
 import prismadb from "@/lib/prismadb";
+import { Billboard } from "./components/columns";
+import { format } from "date-fns";
 
 const BillboardPage = async ({ params }: { params: { storeId: string } }) => {
   const billboards = await prismadb.billboard.findMany({
@@ -13,9 +14,15 @@ const BillboardPage = async ({ params }: { params: { storeId: string } }) => {
     },
   });
 
+  const formattedBillboards: Billboard[] = billboards.map((item) => ({
+    id: item.id,
+    label: item.label,
+    createdAt: format(item.createdAt, "MMMM do, yyyy"),
+  }));
+
   return (
     <Container>
-      <BillboardClient data={billboards} />
+      <BillboardClient data={formattedBillboards} />
     </Container>
   );
 };
