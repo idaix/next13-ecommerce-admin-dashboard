@@ -1,20 +1,30 @@
 import Container from "@/components/container";
-import { Button } from "@/components/ui/button";
-import Heading from "@/components/ui/heading";
-import { PlusIcon } from "lucide-react";
-const CategoriesPage = () => {
+import Client from "./components/client";
+import prismadb from "@/lib/prismadb";
+import { Category } from "./components/columns";
+import { format } from "date-fns";
+const CategoriesPage = async ({ params }: { params: { storeId: string } }) => {
+  const categories = await prismadb.category.findMany({
+    where: {
+      storeId: params.storeId,
+    },
+    include: {
+      billboard: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  const formattedCategories: Category[] = categories.map((item) => ({
+    id: item.id,
+    name: item.name,
+    billboardLabel: item.billboard.label,
+    createdAt: format(item.createdAt, "MMMM do, yyyy"),
+  }));
   return (
     <Container>
-      <div className="flex items-center justify-between">
-        <Heading
-          title="Categories (0)"
-          description="Manage categories for your store"
-        />
-        <Button>
-          <PlusIcon className="h-4 w-4 mr-2" />
-          Add new
-        </Button>
-      </div>
+      <Client data={formattedCategories} />
     </Container>
   );
 };
