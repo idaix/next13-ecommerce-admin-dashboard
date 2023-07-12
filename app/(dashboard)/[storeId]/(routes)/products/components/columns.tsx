@@ -2,11 +2,11 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import CellAction from "./cell-action";
-import { Decimal } from "@prisma/client/runtime";
+
 export type Product = {
   id: string;
   name: string;
-  price: Decimal;
+  price: string;
   isFeatured: boolean;
   isArchived: boolean;
   category: string;

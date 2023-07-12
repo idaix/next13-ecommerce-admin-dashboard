@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import prismadb from "@/lib/prismadb";
 import ProductsForm from "./components/products-form";
 
-const BillboardAction = async ({
+const ProductActionPage = async ({
   params,
 }: {
   params: { productId: string; storeId: string };
@@ -53,4 +53,4 @@ const BillboardAction = async ({
   );
 };
 
-export default BillboardAction;
+export default ProductActionPage;

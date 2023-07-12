@@ -2,9 +2,11 @@
 
 import AlertModal from "@/components/modals/alert-modal";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -97,17 +99,17 @@ const ProductsForm: React.FC<ProductFormProps> = ({
       setLoading(true);
       if (initialData) {
         await axios.patch(
-          `/api/${params.storeId}/billboards/${initialData.id}`,
+          `/api/${params.storeId}/products/${initialData.id}`,
           values
         );
       } else {
-        await axios.post(`/api/${params.storeId}/billboards`, values);
+        await axios.post(`/api/${params.storeId}/products`, values);
       }
       router.refresh();
-      router.push(`/${params.storeId}/billboards`);
+      router.push(`/${params.storeId}/products`);
       toast.success(toastMessage);
     } catch (error) {
-      console.log("BILLBOARD_CREATE_UPDATE", error);
+      console.log("PRODUCT_CREATE_UPDATE", error);
       toast.error("Something went wrong");
     } finally {
       setLoading(false);
@@ -117,17 +119,13 @@ const ProductsForm: React.FC<ProductFormProps> = ({
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(
-        `/api/${params.storeId}/billboards/${initialData?.id}`
-      );
+      await axios.delete(`/api/${params.storeId}/products/${initialData?.id}`);
       router.refresh();
-      router.push(`/${params.storeId}/billboards`);
-      toast.success("Billboard deleted.");
+      router.push(`/${params.storeId}/products`);
+      toast.success("Product deleted.");
     } catch (error) {
-      console.log("BILLBOARD_DELETE", error);
-      toast.error(
-        "Make sure you removed all categories using this billboard first."
-      );
+      console.log("PRODUCT_DELETE", error);
+      toast.error("Something went wrong!");
     } finally {
       setLoading(false);
       setOpen(false);
@@ -201,7 +199,7 @@ const ProductsForm: React.FC<ProductFormProps> = ({
               control={form.control}
               render={({ field }) => (
                 <FormItem className="">
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>Price</FormLabel>
                   <FormControl>
                     <Input
                       type="number"
@@ -306,6 +304,50 @@ const ProductsForm: React.FC<ProductFormProps> = ({
                       ))}
                     </SelectContent>
                   </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="isFeatured"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      // @ts-ignore
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <div className="flex flex-col justify-between h-full leading-none">
+                    <FormLabel>Featured</FormLabel>
+                    <FormDescription>
+                      This product will appear on the home page.
+                    </FormDescription>
+                  </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="isArchived"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      // @ts-ignore
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <div className="flex flex-col justify-between h-full leading-none">
+                    <FormLabel>Archived</FormLabel>
+                    <FormDescription>
+                      This product will not appear anywhere in the home store.
+                    </FormDescription>
+                  </div>
                   <FormMessage />
                 </FormItem>
               )}

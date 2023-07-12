@@ -3,6 +3,7 @@ import Container from "@/components/container";
 import prismadb from "@/lib/prismadb";
 import { Product } from "./components/columns";
 import { format } from "date-fns";
+import { formatter } from "@/lib/utils";
 
 const BillboardPage = async ({ params }: { params: { storeId: string } }) => {
   const product = await prismadb.product.findMany({
@@ -24,7 +25,7 @@ const BillboardPage = async ({ params }: { params: { storeId: string } }) => {
     name: item.name,
     isArchived: item.isArchived,
     isFeatured: item.isFeatured,
-    price: item.price,
+    price: formatter.format(item.price.toNumber()),
     category: item.category.name,
     color: item.color.value,
     size: item.size.name,

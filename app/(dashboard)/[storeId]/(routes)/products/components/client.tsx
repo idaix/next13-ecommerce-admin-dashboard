@@ -5,7 +5,6 @@ import Heading from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 import { PlusIcon } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import React from "react";
 import { Product, columns } from "./columns";
 import { DataTable } from "@/components/ui/data-table";
 import ApiList from "@/components/ui/api-list";
@@ -34,7 +33,7 @@ const Client: React.FC<ProductClientProps> = ({ data }) => {
       <DataTable columns={columns} data={data} searchKey="label" />
       <Heading title="API" description="API Calls for products" />
       <Separator />
-      <ApiList entityName="products" entityId="productsId" />
+      <ApiList entityName="products" entityId="productId" />
     </>
   );
 };
