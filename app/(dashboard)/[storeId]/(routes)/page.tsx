@@ -15,7 +15,10 @@ const DashboardPage: React.FC<DashboardParams> = async ({ params }) => {
 
   return (
     <Container>
-      <Heading title="Dashboard" description="Overview of your store" />{" "}
+      <Heading title="Dashboard" description="Overview of your store" />
+      <div className="w-full h-full grid place-content-center">
+        <p className="text-gray-500 text-3xl">This part not ready!</p>
+      </div>
     </Container>
   );
 };
